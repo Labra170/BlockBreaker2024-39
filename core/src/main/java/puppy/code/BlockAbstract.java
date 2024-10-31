@@ -1,7 +1,7 @@
 package puppy.code;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public abstract class BlockAbstract
+public abstract class BlockAbstract implements DropInterface
 {
 	    private int x,y,width,height;
 	    private boolean destroyed;

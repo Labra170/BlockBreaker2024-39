@@ -25,6 +25,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private int vidas;
 	private int puntaje;
 	private int nivel;
+	private BlockHP test;
     
 		@Override
 		public void create () {	
@@ -50,16 +51,17 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    for (int cont = 0; cont<filas; cont++ ) {
 		    	y -= blockHeight+10;
 		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
-		    		if (MathUtils.random(1,10) > 2)
-		    		{
-		    			blocks.add(new BlockDefault(x, y, blockWidth, blockHeight));
-		    		}
-		    		else
+		    		if (MathUtils.random(1,100) <= 10) // Se determina la probabilidad del tipo de bloque.
 		    		{
 		    			blocks.add(new BlockHP(x, y, blockWidth, blockHeight));
 		    		}
+		    		else
+		    		{
+		    			blocks.add(new BlockDefault(x, y, blockWidth, blockHeight));
+		    		}
 		        }
 		    }
+		    test = new BlockHP(200, 0, 70, 26);
 		    
 		}
 		public void dibujaTextos() {
@@ -71,6 +73,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			//dibujar textos
 			font.draw(batch, "Puntos: " + puntaje, 10, 25);
 			font.draw(batch, "Vidas : " + vidas, Gdx.graphics.getWidth()-20, 25);
+			font.draw(batch, "HP+", 255, 25);
 			batch.end();
 		}	
 		
@@ -108,9 +111,16 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	            b.draw(shape);
 	            ball.checkCollision(b);
 	        }
+	        test.draw(shape);
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
 	            BlockAbstract b = blocks.get(i);
+	            
+	            if (b instanceof BlockHP && b.getDestroyed())
+	            {
+	            	test.Drop(shape, b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
+	            }
+	            	
 	            if (b.getDestroyed()) {
 	            	puntaje++;
 	                blocks.remove(b);
@@ -120,7 +130,6 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        
 	        ball.checkCollision(pad);
 	        ball.draw(shape);
-	        
 	        shape.end();
 	        dibujaTextos();
 		}
@@ -128,5 +137,13 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		@Override
 		public void dispose () {
 
+		}
+		public void setVidas(int vidas)
+		{
+			this.vidas = vidas;
+		}
+		public int getVidas()
+		{
+			return vidas;
 		}
 	}
