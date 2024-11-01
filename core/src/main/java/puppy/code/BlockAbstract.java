@@ -1,11 +1,15 @@
 package puppy.code;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+// Clase abstracta, usada como base para el resto de bloques.
+// Por el momento solo utilizada por BlockDefault y BlockHP
 public abstract class BlockAbstract implements DropInterface
 {
 	    private int x,y,width,height;
 	    private boolean destroyed;
 	    
+	    // Constructor base para los bloques.
+	    // A pesar de ser una clase abstracta, el constructor existe para simplificar la construccion de sus clases concretas.
 	    public BlockAbstract(int x, int y, int width, int height) {
 	        this.x = x;
 	        this.y = y;
@@ -14,6 +18,8 @@ public abstract class BlockAbstract implements DropInterface
 	        destroyed = false;
 	  
 	    }
+	    
+	    // Para dibujar el bloque en el render.
 	    public void draw(ShapeRenderer shape){
 	        shape.rect(x, y, width, height);
 	    }

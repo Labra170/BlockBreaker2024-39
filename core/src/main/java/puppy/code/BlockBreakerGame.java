@@ -53,15 +53,15 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
 		    		if (MathUtils.random(1,100) <= 10) // Se determina la probabilidad del tipo de bloque.
 		    		{
-		    			blocks.add(new BlockHP(x, y, blockWidth, blockHeight));
+		    			blocks.add(new BlockHP(x, y, blockWidth, blockHeight)); // Bloque de vida
 		    		}
 		    		else
 		    		{
-		    			blocks.add(new BlockDefault(x, y, blockWidth, blockHeight));
+		    			blocks.add(new BlockDefault(x, y, blockWidth, blockHeight)); // Bloque Default
 		    		}
 		        }
 		    }
-		    test = new BlockHP(200, 0, 70, 26);
+		    test = new BlockHP(200, 0, 70, 26); // Decoy
 		    
 		}
 		public void dibujaTextos() {
@@ -73,7 +73,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			//dibujar textos
 			font.draw(batch, "Puntos: " + puntaje, 10, 25);
 			font.draw(batch, "Vidas : " + vidas, Gdx.graphics.getWidth()-20, 25);
-			font.draw(batch, "HP+", 255, 25);
+			font.draw(batch, "HP+", 255, 25); // Texto sobre el decoy, tambien sirve para indicar que hace el bloque asignado.
 			batch.end();
 		}	
 		
@@ -111,12 +111,13 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	            b.draw(shape);
 	            ball.checkCollision(b);
 	        }
-	        test.draw(shape);
+	        test.draw(shape); // Se crea "decoy" de un objeto de tipo BlockHP
+	        // Desde este se llama al drop, por el momento.
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
 	            BlockAbstract b = blocks.get(i);
 	            
-	            if (b instanceof BlockHP && b.getDestroyed())
+	            if (b instanceof BlockHP && b.getDestroyed()) // Si el bloque destruido es de tipo BlockHP
 	            {
 	            	test.Drop(shape, b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
 	            }
