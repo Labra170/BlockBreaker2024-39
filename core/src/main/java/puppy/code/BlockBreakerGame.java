@@ -26,7 +26,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private int puntaje;
 	private int nivel;
 	private BlockHP test;
-    
+   
 		@Override
 		public void create () {	
 			camera = new OrthographicCamera();
@@ -38,8 +38,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    crearBloques(2+nivel);
 			
 		    shape = new ShapeRenderer();
-		    ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10, 5, 7, true);
-		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
+		    pad = Paddle.getPaddle(Gdx.graphics.getWidth()/2-50,40,100,10);
+		    ball = PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 		    vidas = 3;
 		    puntaje = 0;    
 		}
@@ -77,6 +77,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			batch.end();
 		}	
 		
+
 		@Override
 		public void render () {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
@@ -91,20 +92,22 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        if (ball.getY()<0) {
 	        	vidas--;
 	        	//nivel = 1;
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
+	        	ball= PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 	        }
 	        // verificar game over
 	        if (vidas<=0) {
 	        	vidas = 3;
 	        	nivel = 1;
+	        	puntaje = 0;
 	        	crearBloques(2+nivel);
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);	        	
 	        }
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
 	        	nivel++;
+	        	ball = PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 	        	crearBloques(2+nivel);
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
+	        	
 	        }    	
 	        //dibujar bloques
 	        for (BlockAbstract b : blocks) {        	
@@ -113,6 +116,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        }
 	        test.draw(shape); // Se crea "decoy" de un objeto de tipo BlockHP
 	        // Desde este se llama al drop, por el momento.
+	        
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
 	            BlockAbstract b = blocks.get(i);

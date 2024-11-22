@@ -10,8 +10,9 @@ public class Paddle {
     private int y = 20;
     private int width = 100;
     private int height = 10;
+    private static Paddle paddle;
     
-    public Paddle(int x, int y, int ancho, int alto) {
+    private Paddle(int x, int y, int ancho, int alto) {
     	this.x = x;
     	this.y= y;
     	width = ancho;
@@ -27,13 +28,24 @@ public class Paddle {
         shape.setColor(Color.BLUE);
         int x2 = x; //= Gdx.input.getX();
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x2 =x-15;
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) x2=x-15; 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x2=x+15; 
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) x2=x+15; 
        // y = Gdx.graphics.getHeight() - Gdx.input.getY(); 
         if (x2 > 0 && x2+width < Gdx.graphics.getWidth()) {
             x = x2;
         }
         shape.rect(x, y, width, height);
     }
+	
+	public static Paddle getPaddle(int x, int y, int ancho, int alto)
+	{
+		if (paddle == null)
+		{
+			paddle = new Paddle(x, y ,ancho, alto);
+		}
+		return paddle;
+	}
     
     
 }

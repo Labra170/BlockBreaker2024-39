@@ -14,8 +14,9 @@ public class PingBall {
 	    private int ySpeed;
 	    private Color color = Color.WHITE;
 	    private boolean estaQuieto;
+	    private static PingBall pingBall;
 	    
-	    public PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
+	    private PingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto) {
 	        this.x = x;
 	        this.y = y;
 	        this.size = size;
@@ -82,4 +83,13 @@ public class PingBall {
 	    	return intersectaX && intersectaY;
 	    }
 	    
+	    public static PingBall getPingBall(int x, int y, int size, int xSpeed, int ySpeed, boolean iniciaQuieto)
+	    {
+	    	if (pingBall == null)
+	    	{
+	    		pingBall = new PingBall(x, y, size, xSpeed, ySpeed, iniciaQuieto);
+	    	}
+			pingBall.setEstaQuieto(true);
+	    	return pingBall;
+	    }
 	}
