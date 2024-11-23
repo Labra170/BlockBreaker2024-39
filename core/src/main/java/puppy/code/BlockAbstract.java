@@ -3,7 +3,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 // Clase abstracta, usada como base para el resto de bloques.
 // Por el momento solo utilizada por BlockDefault y BlockHP
-public abstract class BlockAbstract implements DropInterface
+public abstract class BlockAbstract
 {
 	    private int x,y,width,height;
 	    private boolean destroyed;
@@ -16,8 +16,9 @@ public abstract class BlockAbstract implements DropInterface
 	        this.width = width;
 	        this.height = height;
 	        destroyed = false;
-	  
 	    }
+	    
+	    public abstract void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa);
 	    
 	    // Para dibujar el bloque en el render.
 	    public void draw(ShapeRenderer shape){

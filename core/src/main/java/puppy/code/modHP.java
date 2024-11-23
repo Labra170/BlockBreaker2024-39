@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 // Objeto modHP para el Drop.
-public class modHP{
+public class modHP implements Action{
 	private int x,y,width,height;
 	private Color cc;
 	
@@ -23,7 +23,7 @@ public class modHP{
     }
     
     // Aumenta la vida del jugador.
-    public void sumarVida(BlockBreakerGame aa)
+    public void action(BlockBreakerGame aa)
     {
     	aa.setVidas(aa.getVidas()+1);
     }

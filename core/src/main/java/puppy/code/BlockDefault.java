@@ -14,7 +14,7 @@ public class BlockDefault extends BlockAbstract{
     }
     
     // Metodo Drop de la interfaz, en este caso no hace nada.
-    public void Drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
+    public void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
     {
     	return;
     }

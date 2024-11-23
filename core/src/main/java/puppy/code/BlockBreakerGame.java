@@ -123,7 +123,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	            
 	            if (b instanceof BlockHP && b.getDestroyed()) // Si el bloque destruido es de tipo BlockHP
 	            {
-	            	test.Drop(shape, b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
+	            	test.drop(shape, b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
 	            }
 	            	
 	            if (b.getDestroyed()) {

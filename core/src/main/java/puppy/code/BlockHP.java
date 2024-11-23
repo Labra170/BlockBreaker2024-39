@@ -15,11 +15,11 @@ public class BlockHP extends BlockAbstract{
 	}
 	
 	// Metodo Drop de la interfaz, en este caso aumenta la vida del jugador.
-	public void Drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
+	public void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
 	{
 		modHP mod = new modHP(x, y, width, height);
 		mod.draw(shape);
-		mod.sumarVida(aa);
+		mod.action(aa);
 	}
 	
     public void draw(ShapeRenderer shape){
