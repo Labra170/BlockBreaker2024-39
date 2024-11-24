@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 // Por el momento solo utilizada por BlockDefault y BlockHP
 public abstract class BlockAbstract
 {
-	    private int x,y,width,height;
+	    private int x,y,width,height, vida;
 	    private boolean destroyed;
 	    
 	    // Constructor base para los bloques.
@@ -18,7 +18,26 @@ public abstract class BlockAbstract
 	        destroyed = false;
 	    }
 	    
-	    public abstract void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa);
+	    public abstract void drop(ShapeRenderer shape, BlockBreakerGame aa);
+	    
+	    // Aplicacion Template Method
+	    public final void cuandoGolpe(ShapeRenderer shape, BlockBreakerGame aa)
+	    {
+	    	vida --;
+	    	System.out.println("Vida reducida a: " + vida); //BORRAR
+	    	
+	    	if (vida == 0)
+	    	{
+	    		drop(shape, aa);
+	    		setDestroyed(true);
+	    		eliminar(aa);
+	    	}
+	    }
+	    
+	    public final void eliminar(BlockBreakerGame aa)
+	    {
+	    	aa.setPuntaje(aa.getPuntaje()+1);
+	    }
 	    
 	    // Para dibujar el bloque en el render.
 	    public void draw(ShapeRenderer shape){
@@ -43,6 +62,10 @@ public abstract class BlockAbstract
 	    {
 	    	this.height = height;
 	    }
+	    public void setVida(int vida)
+	    {
+	    	this.vida =  vida;
+	    }
 	    public void setDestroyed(boolean destroyed)
 	    {
 	    	this.destroyed = destroyed;
@@ -63,6 +86,10 @@ public abstract class BlockAbstract
 	    public int getHeight()
 	    {
 	    	return height;
+	    }
+	    public int getVida()
+	    {
+	    	return vida;
 	    }
 	    public boolean getDestroyed()
 	    {

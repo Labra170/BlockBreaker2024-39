@@ -11,13 +11,14 @@ public class BlockHP extends BlockAbstract{
 	public BlockHP(int x, int y, int width, int height)
 	{
 		super(x, y, width, height);
+		setVida(2);
 		cc = new Color(0xffd700ff);
 	}
 	
-	// Metodo Drop de la interfaz, en este caso aumenta la vida del jugador.
-	public void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
+	// Metodo Drop de la clase abstracta, en este caso aumenta la vida del jugador.
+	public void drop(ShapeRenderer shape, BlockBreakerGame aa)
 	{
-		modHP mod = new modHP(x, y, width, height);
+		modHP mod = new modHP(getX(), getY(), getWidth(), getHeight(), 2);
 		mod.draw(shape);
 		mod.action(aa);
 	}
@@ -25,7 +26,6 @@ public class BlockHP extends BlockAbstract{
     public void draw(ShapeRenderer shape){
     	shape.setColor(cc);
         shape.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        
     }
     
     public ShapeRenderer getShape()

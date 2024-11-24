@@ -21,7 +21,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private ShapeRenderer shape;
 	private PingBall ball;
 	private Paddle pad;
-	private ArrayList<BlockAbstract> blocks = new ArrayList<>();
+	protected ArrayList<BlockAbstract> blocks = new ArrayList<>();
 	private int vidas;
 	private int puntaje;
 	private int nivel;
@@ -112,23 +112,17 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        //dibujar bloques
 	        for (BlockAbstract b : blocks) {        	
 	            b.draw(shape);
-	            ball.checkCollision(b);
+	            ball.checkCollision(b, shape, this);
 	        }
 	        test.draw(shape); // Se crea "decoy" de un objeto de tipo BlockHP
-	        // Desde este se llama al drop, por el momento.
 	        
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
 	            BlockAbstract b = blocks.get(i);
 	            
-	            if (b instanceof BlockHP && b.getDestroyed()) // Si el bloque destruido es de tipo BlockHP
-	            {
-	            	test.drop(shape, b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
-	            }
-	            	
 	            if (b.getDestroyed()) {
-	            	puntaje++;
-	                blocks.remove(b);
+	            	b.cuandoGolpe(shape, this);
+	            	blocks.remove(b);
 	                i--; //para no saltarse 1 tras eliminar del arraylist
 	            }
 	        }
@@ -150,5 +144,14 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		public int getVidas()
 		{
 			return vidas;
+		}
+		
+		public int getPuntaje()
+		{
+			return puntaje;
+		}
+		public void setPuntaje(int puntaje)
+		{
+			this.puntaje = puntaje;
 		}
 	}

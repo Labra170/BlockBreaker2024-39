@@ -10,11 +10,12 @@ public class BlockDefault extends BlockAbstract{
 	// Constructor para que tenga un color predeterminado
     public BlockDefault(int x, int y, int width, int height) {
     	super(x, y, width, height);
+    	setVida(1);
         cc = new Color(0xa020f0ff);
     }
     
     // Metodo Drop de la interfaz, en este caso no hace nada.
-    public void drop(ShapeRenderer shape, int x, int y, int width, int height, BlockBreakerGame aa)
+    public void drop(ShapeRenderer shape, BlockBreakerGame aa)
     {
     	return;
     }

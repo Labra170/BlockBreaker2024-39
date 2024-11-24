@@ -70,10 +70,10 @@ public class PingBall {
 	    	return intersectaX && intersectaY;
 	    }
 	    
-	    public void checkCollision(BlockAbstract block) {
+	    public void checkCollision(BlockAbstract block, ShapeRenderer shape, BlockBreakerGame aa) {
 	        if(collidesWith(block)){
 	            ySpeed = - ySpeed;
-	            block.setDestroyed(true);
+	            block.cuandoGolpe(shape, aa);
 	        }
 	    }
 	    private boolean collidesWith(BlockAbstract bb) {
