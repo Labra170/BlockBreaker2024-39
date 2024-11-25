@@ -8,10 +8,9 @@ public class BlockHP extends BlockAbstract{
 	private ShapeRenderer shape;
 	
 	// Constructor para que tenga un color predeterminado
-	public BlockHP(int x, int y, int width, int height)
+	public BlockHP(int x, int y, int width, int height, int vida)
 	{
-		super(x, y, width, height);
-		setVida(2);
+		super(x, y, width, height, vida+1);
 		cc = new Color(0xffd700ff);
 	}
 	

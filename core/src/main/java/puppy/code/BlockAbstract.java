@@ -10,11 +10,12 @@ public abstract class BlockAbstract
 	    
 	    // Constructor base para los bloques.
 	    // A pesar de ser una clase abstracta, el constructor existe para simplificar la construccion de sus clases concretas.
-	    public BlockAbstract(int x, int y, int width, int height) {
+	    public BlockAbstract(int x, int y, int width, int height, int vida) {
 	        this.x = x;
 	        this.y = y;
 	        this.width = width;
 	        this.height = height;
+	        this.vida = vida;
 	        destroyed = false;
 	    }
 	    

@@ -1,6 +1,6 @@
 package puppy.code;
 
 public interface BlockFactory {
-	BlockHP createHP();
-	BlockDefault createDefault();
+	BlockAbstract crearBlockHP(int x, int y, int width, int height, int nivel);
+	BlockAbstract crearBlockDefault(int x, int y, int width, int height, int nivel);
 }

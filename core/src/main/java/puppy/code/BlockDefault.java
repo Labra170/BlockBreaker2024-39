@@ -8,9 +8,8 @@ public class BlockDefault extends BlockAbstract{
 	private Color cc;
     
 	// Constructor para que tenga un color predeterminado
-    public BlockDefault(int x, int y, int width, int height) {
-    	super(x, y, width, height);
-    	setVida(1);
+    public BlockDefault(int x, int y, int width, int height, int vida) {
+    	super(x, y, width, height, vida);
         cc = new Color(0xa020f0ff);
     }
     

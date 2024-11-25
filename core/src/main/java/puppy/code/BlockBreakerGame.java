@@ -26,6 +26,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private int puntaje;
 	private int nivel;
 	private BlockHP test;
+	private BlockFactory factory;
    
 		@Override
 		public void create () {	
@@ -34,8 +35,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
-		    nivel = 1;
-		    crearBloques(2+nivel);
+		    nivel = 5;
+		    crearBloques();
 			
 		    shape = new ShapeRenderer();
 		    pad = Paddle.getPaddle(Gdx.graphics.getWidth()/2-50,40,100,10);
@@ -43,25 +44,47 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    vidas = 3;
 		    puntaje = 0;    
 		}
-		public void crearBloques(int filas) {
+		public void crearBloques() {
 			blocks.clear();
+			int filas = 3;
+			if (nivel == 1 || nivel == 2)
+			{
+				System.out.println(filas);
+				factory = new BlockFactoryFacil();
+			}
+			else if (nivel == 3 || nivel == 4)
+			{
+				filas++;
+				factory = new BlockFactoryMedio();
+			}
+			else
+			{
+				filas+= 2;
+				factory = new BlockFactoryDificil();
+			}
+			
 			int blockWidth = 70;
-		    int blockHeight = 26;
+			int blockHeight = 26;
 		    int y = Gdx.graphics.getHeight();
-		    for (int cont = 0; cont<filas; cont++ ) {
-		    	y -= blockHeight+10;
-		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
-		    		if (MathUtils.random(1,100) <= 10) // Se determina la probabilidad del tipo de bloque.
-		    		{
-		    			blocks.add(new BlockHP(x, y, blockWidth, blockHeight)); // Bloque de vida
-		    		}
-		    		else
-		    		{
-		    			blocks.add(new BlockDefault(x, y, blockWidth, blockHeight)); // Bloque Default
-		    		}
-		        }
-		    }
-		    test = new BlockHP(200, 0, 70, 26); // Decoy
+		    
+			for (int i = 0; i < filas; i++)
+			{
+				y -= blockHeight+10;
+				for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth+10)
+				{
+					if (MathUtils.random(1,100) <= 10)
+					{
+						blocks.add(factory.crearBlockHP(x, y, blockWidth, blockHeight, nivel));
+					}
+					else
+					{
+						blocks.add(factory.crearBlockDefault(x, y, blockWidth, blockHeight, nivel));
+					}
+				}
+				
+			}
+			factory = null;
+		    test = new BlockHP(200, 0, 70, 26, 1); // Decoy
 		    
 		}
 		public void dibujaTextos() {
@@ -99,14 +122,14 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        	vidas = 3;
 	        	nivel = 1;
 	        	puntaje = 0;
-	        	crearBloques(2+nivel);
+	        	crearBloques();
 	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);	        	
 	        }
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
 	        	nivel++;
 	        	ball = PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
-	        	crearBloques(2+nivel);
+	        	crearBloques();
 	        	
 	        }    	
 	        //dibujar bloques
