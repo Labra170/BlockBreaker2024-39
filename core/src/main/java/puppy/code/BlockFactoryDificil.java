@@ -10,4 +10,8 @@ public class BlockFactoryDificil implements BlockFactory{
 	{
 		return new BlockDefault(x, y, width, height, nivel);
 	}
+	public BlockDoublePoints crearBlockDoublePoints(int x, int y, int width, int height, int nivel)
+	{
+		return new BlockDoublePoints(x, y, width, height, nivel);
+	}
 }

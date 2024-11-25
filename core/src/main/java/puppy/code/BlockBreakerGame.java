@@ -24,8 +24,9 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	protected ArrayList<BlockAbstract> blocks = new ArrayList<>();
 	private int vidas;
 	private int puntaje;
-	private int nivel;
+	private int ronda;
 	private BlockHP test;
+	private BlockDoublePoints test2;
 	private BlockFactory factory;
    
 		@Override
@@ -35,7 +36,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
-		    nivel = 5;
+		    ronda = 1;
 		    crearBloques();
 			
 		    shape = new ShapeRenderer();
@@ -47,12 +48,11 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		public void crearBloques() {
 			blocks.clear();
 			int filas = 3;
-			if (nivel == 1 || nivel == 2)
+			if (ronda == 1 || ronda == 2)
 			{
-				System.out.println(filas);
 				factory = new BlockFactoryFacil();
 			}
-			else if (nivel == 3 || nivel == 4)
+			else if (ronda == 3 || ronda == 4)
 			{
 				filas++;
 				factory = new BlockFactoryMedio();
@@ -72,19 +72,25 @@ public class BlockBreakerGame extends ApplicationAdapter {
 				y -= blockHeight+10;
 				for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth+10)
 				{
-					if (MathUtils.random(1,100) <= 10)
+					int prob = MathUtils.random(1, 100);
+					if (prob <= 20)
 					{
-						blocks.add(factory.crearBlockHP(x, y, blockWidth, blockHeight, nivel));
+						blocks.add(factory.crearBlockHP(x, y, blockWidth, blockHeight, ronda));
+					}
+					else if (prob > 20 && prob <= 25)
+					{
+						blocks.add(factory.crearBlockDoublePoints(x, y, blockWidth, blockHeight, ronda));
 					}
 					else
 					{
-						blocks.add(factory.crearBlockDefault(x, y, blockWidth, blockHeight, nivel));
+						blocks.add(factory.crearBlockDefault(x, y, blockWidth, blockHeight, ronda));
 					}
 				}
 				
 			}
 			factory = null;
 		    test = new BlockHP(200, 0, 70, 26, 1); // Decoy
+		    test2 = new BlockDoublePoints(400, 0, 70, 26, 1);
 		    
 		}
 		public void dibujaTextos() {
@@ -97,6 +103,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			font.draw(batch, "Puntos: " + puntaje, 10, 25);
 			font.draw(batch, "Vidas : " + vidas, Gdx.graphics.getWidth()-20, 25);
 			font.draw(batch, "HP+", 255, 25); // Texto sobre el decoy, tambien sirve para indicar que hace el bloque asignado.
+			font.draw(batch, "x2", 520, 25);
 			batch.end();
 		}	
 		
@@ -114,20 +121,18 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        //verificar si se fue la bola x abajo
 	        if (ball.getY()<0) {
 	        	vidas--;
-	        	//nivel = 1;
 	        	ball= PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 	        }
 	        // verificar game over
 	        if (vidas<=0) {
 	        	vidas = 3;
-	        	nivel = 1;
+	        	ronda = 1;
 	        	puntaje = 0;
-	        	crearBloques();
-	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);	        	
+	        	crearBloques();      	
 	        }
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
-	        	nivel++;
+	        	ronda++;
 	        	ball = PingBall.getPingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
 	        	crearBloques();
 	        	
@@ -138,6 +143,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	            ball.checkCollision(b, shape, this);
 	        }
 	        test.draw(shape); // Se crea "decoy" de un objeto de tipo BlockHP
+	        test2.draw(shape);
 	        
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
@@ -176,5 +182,10 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		public void setPuntaje(int puntaje)
 		{
 			this.puntaje = puntaje;
+		}
+		
+		public int getRonda()
+		{
+			return ronda;
 		}
 	}
